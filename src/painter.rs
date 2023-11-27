@@ -394,7 +394,7 @@ impl Painter {
         id
     }
 
-    pub fn new_user_existing_texture(
+    pub fn new_user_texture_existing(
         &mut self,
         size: (usize, usize),
         gl_id: u32,
@@ -410,7 +410,7 @@ impl Painter {
                 pixels: vec![],
                 gl_id: Some(gl_id),
                 filtering,
-                dirty: true,
+                dirty: false, // already uploaded
             },
         );
 
