@@ -394,7 +394,7 @@ impl Painter {
         id
     }
 
-    pub fn new_user_texture_existing(&mut self, gl_id: u32, filtering: bool) -> egui::TextureId {
+    pub fn new_user_texture_existing(&mut self, gl_id: u32) -> egui::TextureId {
         //assert_eq!(size.0 * size.1, srgba_pixels.len());
 
         let id = egui::TextureId::User(self.textures.len() as u64);
@@ -404,8 +404,8 @@ impl Painter {
                 size: (0, 0),
                 pixels: vec![],
                 gl_id: Some(gl_id),
-                filtering,
-                dirty: false, // already uploaded
+                filtering: false, // texture already has filtering set up
+                dirty: false,     // already uploaded
             },
         );
 
