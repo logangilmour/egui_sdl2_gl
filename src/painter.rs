@@ -394,6 +394,29 @@ impl Painter {
         id
     }
 
+    pub fn new_user_existing_texture(
+        &mut self,
+        size: (usize, usize),
+        gl_id: u32,
+        filtering: bool,
+    ) -> egui::TextureId {
+        //assert_eq!(size.0 * size.1, srgba_pixels.len());
+
+        let id = egui::TextureId::User(self.textures.len() as u64);
+        self.textures.insert(
+            id,
+            Texture {
+                size,
+                pixels: vec![],
+                gl_id: Some(gl_id),
+                filtering,
+                dirty: true,
+            },
+        );
+
+        id
+    }
+
     /// Creates a new user texture from rgba8
     pub fn new_user_texture_rgba8(
         &mut self,
