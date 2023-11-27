@@ -394,19 +394,14 @@ impl Painter {
         id
     }
 
-    pub fn new_user_texture_existing(
-        &mut self,
-        size: (usize, usize),
-        gl_id: u32,
-        filtering: bool,
-    ) -> egui::TextureId {
+    pub fn new_user_texture_existing(&mut self, gl_id: u32, filtering: bool) -> egui::TextureId {
         //assert_eq!(size.0 * size.1, srgba_pixels.len());
 
         let id = egui::TextureId::User(self.textures.len() as u64);
         self.textures.insert(
             id,
             Texture {
-                size,
+                size: (0, 0),
                 pixels: vec![],
                 gl_id: Some(gl_id),
                 filtering,
