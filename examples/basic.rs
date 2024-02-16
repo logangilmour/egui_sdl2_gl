@@ -90,9 +90,10 @@ fn main() {
 
         let FullOutput {
             platform_output,
-            repaint_after,
             textures_delta,
             shapes,
+            pixels_per_point,
+            viewport_output,
         } = egui_ctx.end_frame();
 
         // Process ouput
@@ -106,10 +107,11 @@ fn main() {
         //     window.set_size(w, h).unwrap();
         // }
 
-        let paint_jobs = egui_ctx.tessellate(shapes);
+        let paint_jobs = egui_ctx.tessellate(shapes, pixels_per_point);
         painter.paint_jobs(None, textures_delta, paint_jobs);
         window.gl_swap_window();
 
+        /*
         if !repaint_after.is_zero() {
             if let Some(event) = event_pump.wait_event_timeout(5) {
                 match event {
@@ -121,16 +123,17 @@ fn main() {
                 }
             }
         } else {
-            for event in event_pump.poll_iter() {
-                match event {
-                    Event::Quit { .. } => break 'running,
-                    _ => {
-                        // Process input event
-                        egui_state.process_input(&window, event, &mut painter);
-                    }
+            */
+        for event in event_pump.poll_iter() {
+            match event {
+                Event::Quit { .. } => break 'running,
+                _ => {
+                    // Process input event
+                    egui_state.process_input(&window, event, &mut painter);
                 }
             }
         }
+        //}
 
         if quit {
             break;

@@ -113,7 +113,7 @@ impl EguiStateHandler {
             pointer_pos: Pos2::new(0f32, 0f32),
             input: egui::RawInput {
                 screen_rect: Some(painter.screen_rect),
-                pixels_per_point: Some(native_pixels_per_point),
+                //pixels_per_point: Some(native_pixels_per_point),
                 ..Default::default()
             },
             modifiers: Modifiers::default(),
@@ -251,6 +251,7 @@ pub fn input_to_egui(
                 pressed: false,
                 repeat,
                 modifiers: state.modifiers,
+                physical_key: None,
             });
         }
 
@@ -288,6 +289,7 @@ pub fn input_to_egui(
                 pressed: true,
                 repeat,
                 modifiers: state.modifiers,
+                physical_key: None,
             });
 
             if state.modifiers.command && key == Key::C {

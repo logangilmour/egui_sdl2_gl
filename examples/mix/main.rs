@@ -139,14 +139,15 @@ fn main() {
 
         let FullOutput {
             platform_output,
-            repaint_after,
             textures_delta,
             shapes,
+            pixels_per_point,
+            viewport_output,
         } = egui_ctx.end_frame();
         // Process output
         egui_state.process_output(&window, &platform_output);
 
-        let paint_jobs = egui_ctx.tessellate(shapes);
+        let paint_jobs = egui_ctx.tessellate(shapes, pixels_per_point);
 
         // Note: passing a bg_color to paint_jobs will clear any previously drawn stuff.
         // Use this only if egui is being used for all drawing and you aren't mixing your own Open GL
@@ -156,7 +157,7 @@ fn main() {
 
         window.gl_swap_window();
 
-        if !repaint_after.is_zero() {
+        /*if !repaint_after.is_zero() {
             if let Some(event) = event_pump.wait_event_timeout(5) {
                 match event {
                     Event::Quit { .. } => break 'running,
@@ -166,17 +167,17 @@ fn main() {
                     }
                 }
             }
-        } else {
-            for event in event_pump.poll_iter() {
-                match event {
-                    Event::Quit { .. } => break 'running,
-                    _ => {
-                        // Process input event
-                        egui_state.process_input(&window, event, &mut painter);
-                    }
+        } else {*/
+        for event in event_pump.poll_iter() {
+            match event {
+                Event::Quit { .. } => break 'running,
+                _ => {
+                    // Process input event
+                    egui_state.process_input(&window, event, &mut painter);
                 }
             }
         }
+        //}
 
         if quit {
             break;
